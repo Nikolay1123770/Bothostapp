@@ -1,46 +1,72 @@
 const TelegramBot = require('node-telegram-bot-api');
 const express = require('express');
 const path = require('path');
+const localtunnel = require('localtunnel');
+const http = require('http');
 const app = express();
 
-// Ваш токен
-const token = '8593344199:AAGUtMmFoEuzPTa-2hO33Dq9afiwk9jB8J4';
+// ВАШ ТОКЕН
+const token = '8593344199:AAGUtMmFoEuzPTa-2hO33Dq9afiwk9jB8J4'; 
 const bot = new TelegramBot(token, {polling: true});
+const port = process.env.PORT || 3000; 
 
-// Порт и домен
-const port = process.env.PORT || 3000;
+let currentAppUrl = '';
+let serverIp = '';
 
-// Используем фиксированный домен test.bothost.ru для примера в мануале
-const appUrl = 'https://test.bothost.ru';
-
-// Настройка веб-сервера
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
 
-// Запуск сервера
-app.listen(port, () => {
-  console.log(`🚀 Сервер запущен на порту ${port}`);
-  console.log(`✅ Используется URL для Mini App: ${appUrl}`);
+// --- ИСПРАВЛЕНИЕ: ЯВНО ОТДАЕМ ФАЙЛ ---
+// Теперь сервер точно знает, что отдавать на главной странице
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Обработка команды /start
+// Функция получения IP
+function getPublicIp() {
+    http.get({'host': 'api.ipify.org', 'port': 80, 'path': '/'}, function(resp) {
+        resp.on('data', function(ip) {
+            serverIp = ip.toString();
+            console.log("🌍 IP СЕРВЕРА: " + serverIp);
+        });
+    });
+}
+
+app.listen(port, async () => {
+  console.log(`🚀 Сервер запущен на порту ${port}`);
+  getPublicIp();
+  
+  try {
+    const tunnel = await localtunnel({ port: port });
+    currentAppUrl = tunnel.url;
+    console.log('✅ HTTPS ССЫЛКА: ' + currentAppUrl);
+  } catch (err) {
+    console.error('Ошибка туннеля:', err);
+  }
+});
+
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
-  const name = msg.from.first_name;
   
-  bot.sendMessage(chatId, `Привет, ${name}! 👋\n\nЭто Mini App демо на Bothost.`, {
+  if (!currentAppUrl || !serverIp) {
+    bot.sendMessage(chatId, "⏳ Загрузка... Нажмите /start через 5 секунд.");
+    return;
+  }
+
+  bot.sendMessage(chatId, 
+    `⚠️ **Важно для запуска:**\n\n` +
+    `1. Твой пароль (IP): \`${serverIp}\` (копируй нажатием)\n` +
+    `2. Жми кнопку ниже\n` +
+    `3. Вставь пароль и жми "Click to Submit"`, 
+    {
+    parse_mode: "Markdown",
     reply_markup: {
       inline_keyboard: [
-        [{ text: "Открыть Mini App 📱", web_app: { url: appUrl } }]
+        [{ text: "Открыть Mini App 📱", web_app: {url: currentAppUrl} }]
       ]
     }
   });
 });
 
-// Обработка данных из Mini App
 bot.on('web_app_data', (msg) => {
-  const data = msg.web_app_data.data;
-  bot.sendMessage(msg.chat.id, `✅ Данные получены: ${data}`);
+  bot.sendMessage(msg.chat.id, `✅ Данные: ${msg.web_app_data.data}`);
 });
-
-console.log('Бот запущен! Используется URL: ' + appUrl);
