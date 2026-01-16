@@ -6,36 +6,19 @@
     <title>Mini App на Bothost</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        :root {
-            color-scheme: light dark;
-            --primary-color: #2481cc;
-            --bg-color: var(--tg-theme-bg-color, #ffffff);
-            --text-color: var(--tg-theme-text-color, #222222);
-            --hint-color: var(--tg-theme-hint-color, #999999);
-            --link-color: var(--tg-theme-link-color, #2481cc);
-            --button-color: var(--tg-theme-button-color, #2481cc);
-            --button-text: var(--tg-theme-button-text-color, #ffffff);
-            --secondary-bg: var(--tg-theme-secondary-bg-color, #f5f5f5);
-        }
-        
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: var(--tg-theme-bg-color, #ffffff);
+            color: var(--tg-theme-text-color, #222222);
             margin: 0;
-            padding: 0;
+            padding: 20px;
             line-height: 1.5;
         }
         
         .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 16px;
             padding-bottom: 80px;
-        }
-        
-        h1, h2, h3 {
-            color: var(--text-color);
         }
         
         h1 {
@@ -44,163 +27,31 @@
             margin: 24px 0;
         }
         
-        h2 {
-            font-size: 20px;
-            margin-top: 32px;
-            border-bottom: 1px solid var(--hint-color);
-            padding-bottom: 8px;
-        }
-        
-        h3 {
-            font-size: 18px;
-            margin-top: 24px;
-        }
-        
-        code {
-            font-family: monospace;
-            background-color: var(--secondary-bg);
-            padding: 2px 4px;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        
-        pre {
-            background-color: var(--secondary-bg);
-            padding: 16px;
-            border-radius: 8px;
-            overflow-x: auto;
-            font-size: 14px;
-            margin: 16px 0;
-        }
-        
-        .tabs {
-            display: flex;
-            background-color: var(--secondary-bg);
-            border-radius: 8px 8px 0 0;
-            overflow-x: auto;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE and Edge */
-        }
-        
-        .tabs::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Opera */
-        }
-        
-        .tab {
-            padding: 12px 18px;
-            cursor: pointer;
-            white-space: nowrap;
-            border-bottom: 3px solid transparent;
-        }
-        
-        .tab.active {
-            color: var(--primary-color);
-            border-bottom: 3px solid var(--primary-color);
-        }
-        
-        .tab-content {
-            display: none;
-            padding: 16px;
-            background-color: var(--secondary-bg);
-            border-radius: 0 0 8px 8px;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        .info-box {
-            background-color: var(--secondary-bg);
-            padding: 16px;
-            border-radius: 8px;
-            margin: 16px 0;
-            border-left: 4px solid var(--primary-color);
-        }
-        
-        .info-box p:first-child {
-            margin-top: 0;
-        }
-        
-        .info-box p:last-child {
-            margin-bottom: 0;
+        .card {
+            background-color: var(--tg-theme-secondary-bg-color, #f5f5f5);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
         }
         
         .button {
-            background-color: var(--button-color);
-            color: var(--button-text);
+            background-color: var(--tg-theme-button-color, #2481cc);
+            color: var(--tg-theme-button-text-color, #ffffff);
             border: none;
-            padding: 12px 24px;
+            padding: 12px 20px;
             border-radius: 8px;
-            cursor: pointer;
             font-size: 16px;
+            cursor: pointer;
             display: block;
-            margin: 24px auto;
             width: 100%;
-            max-width: 300px;
             text-align: center;
-        }
-        
-        .button:hover {
-            opacity: 0.9;
-        }
-        
-        .badge {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-            margin-right: 8px;
+            margin-top: 20px;
         }
         
         .logo {
+            font-size: 48px;
             text-align: center;
-            font-size: 56px;
-            margin: 32px 0;
-        }
-        
-        .step {
-            margin-bottom: 24px;
-            border-left: 3px solid var(--hint-color);
-            padding-left: 16px;
-            position: relative;
-        }
-        
-        .step::before {
-            content: attr(data-step);
-            position: absolute;
-            left: -16px;
-            top: 0;
-            background-color: var(--primary-color);
-            color: white;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-        
-        .step-title {
-            font-weight: bold;
-            font-size: 18px;
-            margin-bottom: 8px;
-            padding-top: 4px;
-        }
-        
-        /* Фиксированная нижняя кнопка */
-        .footer-button {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 16px;
-            background-color: var(--bg-color);
-            border-top: 1px solid var(--hint-color);
-            text-align: center;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            margin: 30px 0;
         }
     </style>
 </head>
@@ -209,396 +60,23 @@
         <div class="logo">🚀</div>
         <h1>Mini App на Bothost</h1>
         
-        <div class="tabs">
-            <div class="tab active" onclick="openTab('intro')">Обзор</div>
-            <div class="tab" onclick="openTab('step1')">Шаг 1: Создание</div>
-            <div class="tab" onclick="openTab('step2')">Шаг 2: Код</div>
-            <div class="tab" onclick="openTab('step3')">Шаг 3: Запуск</div>
-            <div class="tab" onclick="openTab('files')">Примеры файлов</div>
-        </div>
-        
-        <!-- Вкладка: Обзор -->
-        <div id="intro" class="tab-content active">
-            <div class="info-box">
-                <p>Это полностью рабочее руководство по созданию Telegram Mini App на платформе <strong>Bothost</strong>.</p>
-                <p>Вы сейчас находитесь <strong>внутри</strong> Mini App, которое было создано с помощью этого же руководства.</p>
-            </div>
-            
-            <h2>Что такое Mini App?</h2>
-            <p>Mini App (мини-приложение) — это веб-приложение, которое открывается прямо в Telegram и имеет доступ к данным пользователя, а также к темам и стилям Telegram.</p>
-            
-            <h2>Почему Bothost?</h2>
-            <p>Bothost предлагает готовую инфраструктуру для хостинга ботов и Mini Apps:</p>
-            <ul>
-                <li>Не нужно настраивать серверы</li>
-                <li>Поддержка Node.js и других языков</li>
-                <li>Возможность привязать домен</li>
-                <li>Автоматическое обновление из Git</li>
-            </ul>
-            
-            <h2>Требования</h2>
-            <p>Для создания Mini App вам понадобится:</p>
-            <ul>
-                <li>Аккаунт на <a href="https://bothost.ru" target="_blank">Bothost</a></li>
-                <li>Бот в Telegram (создается через @BotFather)</li>
-                <li>Базовое понимание HTML/JS/CSS</li>
-            </ul>
-            
-            <p>Переключайтесь между вкладками для изучения пошаговой инструкции!</p>
-        </div>
-        
-        <!-- Вкладка: Шаг 1 -->
-        <div id="step1" class="tab-content">
-            <h2>Шаг 1: Настройка окружения</h2>
-            
-            <div class="step" data-step="1">
-                <div class="step-title">Создайте бота в Telegram</div>
-                <p>Откройте @BotFather в Telegram и выполните следующие команды:</p>
-                <ol>
-                    <li>Отправьте команду <code>/newbot</code></li>
-                    <li>Введите имя для бота (например, "My Mini App Bot")</li>
-                    <li>Введите username бота (например, "my_miniapp_bot")</li>
-                    <li><strong>Сохраните полученный токен</strong> — он понадобится для Bothost</li>
-                </ol>
-            </div>
-            
-            <div class="step" data-step="2">
-                <div class="step-title">Зарегистрируйтесь на Bothost</div>
-                <p>Перейдите на сайт <a href="https://bothost.ru" target="_blank">bothost.ru</a> и создайте аккаунт, если у вас его еще нет.</p>
-            </div>
-            
-            <div class="step" data-step="3">
-                <div class="step-title">Создайте нового бота на Bothost</div>
-                <ol>
-                    <li>Нажмите "Создать бота" на панели управления</li>
-                    <li>Введите название бота (для внутренней идентификации)</li>
-                    <li>Выберите платформу: <strong>Telegram</strong></li>
-                    <li>Выберите язык: <strong>Node.js</strong> (важно для Mini App)</li>
-                    <li>Вставьте токен, полученный от @BotFather</li>
-                    <li>Выберите локацию развертывания (для русских пользователей рекомендуется "Россия")</li>
-                    <li>Нажмите "Создать бота"</li>
-                </ol>
-            </div>
-            
-            <div class="info-box">
-                <p><strong>Совет:</strong> Если у вас тариф "Базовый" или выше, вы можете привязать свой домен или использовать поддомен на bothost.ru для более красивого URL.</p>
-            </div>
-        </div>
-        
-        <!-- Вкладка: Шаг 2 -->
-        <div id="step2" class="tab-content">
-            <h2>Шаг 2: Подготовка кода</h2>
-            
-            <p>Для работы Mini App вам понадобится настроить три ключевых файла:</p>
-            
-            <div class="step" data-step="1">
-                <div class="step-title">Создайте package.json</div>
-                <p>Этот файл описывает зависимости и настройки Node.js проекта:</p>
-                <pre>{
-  "name": "bothost-miniapp",
-  "version": "1.0.0",
-  "description": "Mini App на Bothost",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "dependencies": {
-    "express": "^4.18.2",
-    "node-telegram-bot-api": "^0.61.0"
-  }
-}</pre>
-                <p>Загрузите файл в корневую директорию вашего бота на Bothost.</p>
-            </div>
-            
-            <div class="step" data-step="2">
-                <div class="step-title">Создайте index.js (Серверная часть)</div>
-                <p>Этот файл запускает бота и веб-сервер:</p>
-                <pre>const TelegramBot = require('node-telegram-bot-api');
-const express = require('express');
-const path = require('path');
-const app = express();
-
-// Настройки
-const token = 'ВАШ_ТОКЕН'; 
-const bot = new TelegramBot(token, {polling: true});
-const port = process.env.PORT || 3000; 
-
-// Ваш домен (пример с нашим доменом)
-const appUrl = 'https://bothostmanualminiapp.ru';
-
-// Настройка веб-сервера
-app.use(express.static(path.join(__dirname)));
-
-// Обработка маршрутов
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-// Запуск сервера
-app.listen(port, () => {
-  console.log(`Сервер запущен на порту ${port}`);
-});
-
-// Команда /start
-bot.onText(/\/start/, (msg) => {
-  const chatId = msg.chat.id;
-  
-  bot.sendMessage(chatId, "Нажмите кнопку:", {
-    reply_markup: {
-      inline_keyboard: [
-        [
-          { 
-            text: "Открыть Mini App", 
-            web_app: {url: appUrl} 
-          }
-        ]
-      ]
-    }
-  });
-});
-
-// Обработка данных из Mini App
-bot.on('web_app_data', (msg) => {
-  const data = msg.web_app_data.data;
-  bot.sendMessage(msg.chat.id, `Получено: ${data}`);
-});</pre>
-                <p>Не забудьте заменить <code>ВАШ_ТОКЕН</code> на ваш реальный токен от BotFather.</p>
-            </div>
-            
-            <div class="step" data-step="3">
-                <div class="step-title">Создайте index.html (Клиентская часть)</div>
-                <p>Это фронтенд вашего Mini App, который увидят пользователи:</p>
-                <pre>&lt;!DOCTYPE html&gt;
-&lt;html lang="ru"&gt;
-&lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-    &lt;title&gt;Mini App&lt;/title&gt;
-    &lt;script src="https://telegram.org/js/telegram-web-app.js"&gt;&lt;/script&gt;
-    &lt;style&gt;
-        body {
-            font-family: sans-serif;
-            background-color: var(--tg-theme-bg-color, #fff);
-            color: var(--tg-theme-text-color, #000);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
-        .card {
-            background-color: var(--tg-theme-secondary-bg-color, #f5f5f5);
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            width: 80%;
-        }
-        .button {
-            background-color: var(--tg-theme-button-color, #2481cc);
-            color: var(--tg-theme-button-text-color, #fff);
-            border: none;
-            padding: 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 20px;
-            width: 100%;
-        }
-    &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;div class="card"&gt;
-        &lt;h1&gt;Привет, Telegram!&lt;/h1&gt;
-        &lt;p id="userInfo"&gt;Загрузка...&lt;/p&gt;
-        &lt;button class="button" onclick="sendData()"&gt;Отправить данные&lt;/button&gt;
-    &lt;/div&gt;
-
-    &lt;script&gt;
-        const tg = window.Telegram.WebApp;
-        tg.expand();
-        
-        // Получаем данные пользователя
-        const user = tg.initDataUnsafe.user;
-        if (user) {
-            document.getElementById('userInfo').innerText = 
-                `Привет, ${user.first_name}!`;
-        }
-        
-        function sendData() {
-            tg.sendData('Привет от Mini App!');
-        }
-    &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</pre>
-                <p>Загрузите этот файл в корневую директорию, рядом с <code>index.js</code>.</p>
-            </div>
-        </div>
-        
-        <!-- Вкладка: Шаг 3 -->
-        <div id="step3" class="tab-content">
-            <h2>Шаг 3: Запуск и тестирование</h2>
-            
-            <div class="step" data-step="1">
-                <div class="step-title">Загрузите файлы на Bothost</div>
-                <p>Вы можете загрузить файлы двумя способами:</p>
-                <ol>
-                    <li><strong>Через веб-интерфейс</strong>: Перейдите в раздел "Files" вашего бота и загрузите подготовленные файлы.</li>
-                    <li><strong>Через Git</strong>: Если вы указали Git-репозиторий при создании бота, просто отправьте файлы в репозиторий и бот обновится автоматически.</li>
-                </ol>
-            </div>
-            
-            <div class="step" data-step="2">
-                <div class="step-title">Запустите бота</div>
-                <p>Перейдите в раздел "Console" и нажмите кнопку "Start" или "Restart", если бот уже был запущен.</p>
-                <p>В консоли вы должны увидеть сообщения:</p>
-                <pre>Сервер запущен на порту 3000
-Бот запущен и готов к работе!</pre>
-            </div>
-            
-            <div class="step" data-step="3">
-                <div class="step-title">Настройка домена (для платных тарифов)</div>
-                <p>Если у вас тариф "Базовый" или выше, вы можете привязать домен:</p>
-                <ol>
-                    <li>В панели управления ботом найдите поле для ввода домена</li>
-                    <li>Введите нужный домен (пример: bothostmanualminiapp.ru)</li>
-                    <li>Нажмите кнопку привязки</li>
-                    <li>Обновите значение <code>appUrl</code> в файле <code>index.js</code></li>
-                    <li>Перезапустите бота</li>
-                </ol>
-            </div>
-            
-            <div class="step" data-step="4">
-                <div class="step-title">Проверьте работу в Telegram</div>
-                <p>Теперь все готово для проверки:</p>
-                <ol>
-                    <li>Откройте своего бота в Telegram</li>
-                    <li>Отправьте команду <code>/start</code></li>
-                    <li>Нажмите на кнопку "Открыть Mini App"</li>
-                    <li>Должно открыться веб-приложение внутри Telegram</li>
-                </ol>
-            </div>
-            
-            <div class="info-box">
-                <p><strong>Важно:</strong> Telegram требует HTTPS для Mini App. На бесплатном тарифе Bothost без домена вам может потребоваться использовать сервис туннелирования (например, localtunnel) для получения HTTPS-ссылки.</p>
-            </div>
-        </div>
-        
-        <!-- Вкладка: Примеры файлов -->
-        <div id="files" class="tab-content">
-            <h2>Полный код для копирования</h2>
-            
-            <h3>package.json</h3>
-            <pre>{
-  "name": "bothost-miniapp",
-  "version": "1.0.0",
-  "description": "Mini App на Bothost",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "dependencies": {
-    "express": "^4.18.2",
-    "node-telegram-bot-api": "^0.61.0"
-  }
-}</pre>
-            
-            <h3>index.js</h3>
-            <pre>const TelegramBot = require('node-telegram-bot-api');
-const express = require('express');
-const path = require('path');
-const app = express();
-
-// Базовые настройки
-const token = 'ВАШ_ТОКЕН_БОТА'; 
-const bot = new TelegramBot(token, {polling: true});
-const port = process.env.PORT || 3000; 
-
-// URL для WebApp (наш актуальный домен)
-const appUrl = 'https://bothostmanualminiapp.ru';
-
-// Настройка статических файлов
-app.use(express.static(path.join(__dirname)));
-
-// Для всех маршрутов отдаем главную страницу
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-// Запускаем веб-сервер
-app.listen(port, () => {
-  console.log(`Сервер запущен на порту ${port}`);
-  console.log(`WebApp URL: ${appUrl}`);
-});
-
-// Обрабатываем команду /start
-bot.onText(/\/start/, (msg) => {
-  const chatId = msg.chat.id;
-  
-  bot.sendMessage(chatId, "👋 Привет! Нажми кнопку, чтобы открыть Mini App:", {
-    reply_markup: {
-      inline_keyboard: [
-        [{ text: "🚀 Открыть Mini App", web_app: {url: appUrl} }]
-      ]
-    }
-  });
-});
-
-// Обрабатываем данные, отправленные из Mini App
-bot.on('web_app_data', (msg) => {
-  const chatId = msg.chat.id;
-  const data = msg.web_app_data.data;
-  
-  bot.sendMessage(chatId, `✅ Получены данные: ${data}`);
-});
-
-console.log('Бот запущен и готов к работе!');</pre>
-            
-            <div class="info-box">
-                <p><strong>Не забудьте:</strong> Заменить <code>ВАШ_ТОКЕН_БОТА</code> на токен от BotFather.</p>
-            </div>
-        </div>
-        
-        <div class="footer-button">
-            <button class="button" onclick="sendData()">Отправить данные в бот</button>
+        <div class="card">
+            <h2>Руководство по созданию Mini App</h2>
+            <p>Это простое демонстрационное Mini App, работающее на платформе Bothost.</p>
+            <p>Домен приложения: <strong>bothostmanualminiapp.ru</strong></p>
+            <p>Mini App успешно запущено! Нажмите кнопку ниже, чтобы отправить данные обратно в бот:</p>
+            <button class="button" onclick="sendData()">Отправить тестовые данные</button>
         </div>
     </div>
 
     <script>
-        // Инициализация Web App
+        // Инициализация Telegram Web App
         const tg = window.Telegram.WebApp;
         tg.expand();
         
-        // Переключение вкладок
-        function openTab(tabId) {
-            // Сначала скрываем все вкладки
-            const tabContents = document.getElementsByClassName("tab-content");
-            for (let i = 0; i < tabContents.length; i++) {
-                tabContents[i].classList.remove("active");
-            }
-            
-            // Затем деактивируем все заголовки вкладок
-            const tabs = document.getElementsByClassName("tab");
-            for (let i = 0; i < tabs.length; i++) {
-                tabs[i].classList.remove("active");
-            }
-            
-            // Активируем выбранную вкладку
-            document.getElementById(tabId).classList.add("active");
-            
-            // Находим соответствующий заголовок вкладки и активируем его
-            const tabLinks = document.getElementsByClassName("tab");
-            for (let i = 0; i < tabLinks.length; i++) {
-                if (tabLinks[i].getAttribute("onclick") === `openTab('${tabId}')`) {
-                    tabLinks[i].classList.add("active");
-                    break;
-                }
-            }
-        }
-        
-        // Функция отправки данных обратно в бот
+        // Функция отправки данных
         function sendData() {
-            tg.sendData("Руководство изучено! Я создам свой Mini App на Bothost!");
+            tg.sendData("Тест Mini App на bothostmanualminiapp.ru прошел успешно!");
             tg.close();
         }
     </script>
