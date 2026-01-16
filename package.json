@@ -1,7 +1,7 @@
 {
   "name": "bothost-miniapp",
   "version": "1.0.0",
-  "description": "Mini App на Bothost",
+  "description": "Mini App Bothost",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
