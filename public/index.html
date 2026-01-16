@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bothost App</title>
-    <!-- Подключаем скрипт Telegram -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body {
@@ -17,17 +16,31 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
         }
         .card {
             background-color: var(--tg-theme-secondary-bg-color, #f0f0f0);
             padding: 20px;
             border-radius: 15px;
             text-align: center;
-            width: 80%;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-        h1 { margin: 0 0 10px; font-size: 24px; }
-        p { margin: 0 0 20px; opacity: 0.8; }
+        h1 { 
+            margin: 0 0 10px; 
+            font-size: 24px; 
+            color: var(--tg-theme-text-color, #000);
+        }
+        p { 
+            margin: 0 0 20px; 
+            opacity: 0.8; 
+        }
+        .logo {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
         .btn {
             background-color: var(--tg-theme-button-color, #3390ec);
             color: var(--tg-theme-button-text-color, #fff);
@@ -37,20 +50,36 @@
             font-size: 16px;
             cursor: pointer;
             width: 100%;
+            margin-top: 15px;
+        }
+        .info {
+            margin-top: 20px;
+            font-size: 14px;
+            opacity: 0.7;
         }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <h1>Bothost Demo</h1>
-        <p id="username">Загрузка...</p>
+        <div class="logo">🤖</div>
+        <h1>Bothost Mini App</h1>
+        <p id="username">Загрузка информации...</p>
+        
         <button class="btn" onclick="sendData()">Отправить статус</button>
+        
+        <p class="info">Демонстрация работы Mini App на платформе Bothost</p>
     </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand(); // Развернуть на весь экран
+        
+        // Применяем цветовую схему Telegram
+        document.documentElement.style.setProperty('--tg-theme-bg-color', tg.themeParams.bg_color || '#ffffff');
+        document.documentElement.style.setProperty('--tg-theme-text-color', tg.themeParams.text_color || '#000000');
+        document.documentElement.style.setProperty('--tg-theme-button-color', tg.themeParams.button_color || '#3390ec');
+        document.documentElement.style.setProperty('--tg-theme-button-text-color', tg.themeParams.button_text_color || '#ffffff');
 
         // Выводим имя пользователя
         const user = tg.initDataUnsafe.user;
@@ -62,7 +91,13 @@
 
         function sendData() {
             // Отправляем данные обратно боту
-            tg.sendData("Кнопка нажата успешно! Bothost работает.");
+            tg.sendData("Тестовый запрос отправлен успешно! ✅");
+            // Показываем уведомление
+            tg.showPopup({
+                title: 'Успех!',
+                message: 'Данные успешно отправлены боту',
+                buttons: [{type: 'ok'}]
+            });
         }
     </script>
 </body>
