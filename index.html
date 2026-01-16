@@ -323,8 +323,8 @@ const token = 'ВАШ_ТОКЕН';
 const bot = new TelegramBot(token, {polling: true});
 const port = process.env.PORT || 3000; 
 
-// Ваш домен (для платных тарифов)
-const appUrl = 'https://ваш-домен.ru';
+// Ваш домен (пример с нашим доменом)
+const appUrl = 'https://bothostmanualminiapp.ru';
 
 // Настройка веб-сервера
 app.use(express.static(path.join(__dirname)));
@@ -362,7 +362,7 @@ bot.on('web_app_data', (msg) => {
   const data = msg.web_app_data.data;
   bot.sendMessage(msg.chat.id, `Получено: ${data}`);
 });</pre>
-                <p>Не забудьте заменить <code>ВАШ_ТОКЕН</code> и <code>appUrl</code> на ваши данные.</p>
+                <p>Не забудьте заменить <code>ВАШ_ТОКЕН</code> на ваш реальный токен от BotFather.</p>
             </div>
             
             <div class="step" data-step="3">
@@ -461,7 +461,7 @@ bot.on('web_app_data', (msg) => {
                 <p>Если у вас тариф "Базовый" или выше, вы можете привязать домен:</p>
                 <ol>
                     <li>В панели управления ботом найдите поле для ввода домена</li>
-                    <li>Введите нужный поддомен (например, myapp.bothost.ru)</li>
+                    <li>Введите нужный домен (пример: bothostmanualminiapp.ru)</li>
                     <li>Нажмите кнопку привязки</li>
                     <li>Обновите значение <code>appUrl</code> в файле <code>index.js</code></li>
                     <li>Перезапустите бота</li>
@@ -514,8 +514,8 @@ const token = 'ВАШ_ТОКЕН_БОТА';
 const bot = new TelegramBot(token, {polling: true});
 const port = process.env.PORT || 3000; 
 
-// URL для WebApp (для платных тарифов используйте домен)
-const appUrl = 'https://ваш-домен.ru';
+// URL для WebApp (наш актуальный домен)
+const appUrl = 'https://bothostmanualminiapp.ru';
 
 // Настройка статических файлов
 app.use(express.static(path.join(__dirname)));
@@ -555,7 +555,7 @@ bot.on('web_app_data', (msg) => {
 console.log('Бот запущен и готов к работе!');</pre>
             
             <div class="info-box">
-                <p><strong>Не забудьте:</strong> Заменить <code>ВАШ_ТОКЕН_БОТА</code> на токен от BotFather и <code>https://ваш-домен.ru</code> на реальный URL вашего приложения.</p>
+                <p><strong>Не забудьте:</strong> Заменить <code>ВАШ_ТОКЕН_БОТА</code> на токен от BotFather.</p>
             </div>
         </div>
         
