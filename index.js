@@ -23,7 +23,7 @@ bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   
   // URL вашего приложения - замените после запуска
-  const appUrl = 'https://example.com';
+  const appUrl = 'http://nodeX.bothost.ru:3000';
   
   bot.sendMessage(chatId, "Привет! Это тест Mini App на Bothost 👇", {
     reply_markup: {
