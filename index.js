@@ -3,42 +3,39 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-// --- НАСТРОЙКИ ---
+// Базовые настройки
 const token = '8593344199:AAGUtMmFoEuzPTa-2hO33Dq9afiwk9jB8J4'; 
+const port = process.env.PORT || 3000;
 const bot = new TelegramBot(token, {polling: true});
-const port = process.env.PORT || 3000; 
 
-// ВАША ССЫЛКА (Жестко заданная)
+// Ваш выставленный домен (замените, если указали другой)
 const appUrl = 'https://test.bothost.ru';
 
-app.use(express.json());
+// Настройка веб-сервера
+app.use(express.static(path.join(__dirname)));
 
-// Отдаем index.html из корня
-app.get('/', (req, res) => {
-    // Пытаемся найти файл в корне
-    res.sendFile(path.join(__dirname, 'index.html'));
+// Обрабатываем все маршруты одинаково - отдаем главную страницу
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Запуск сервера
+// Запускаем сервер
 app.listen(port, () => {
-  console.log(`🚀 Сервер запущен на порту ${port}`);
-  console.log(`🔗 Ссылка для кнопки: ${appUrl}`);
+  console.log(`Сервер запущен на порту ${port}`);
+  console.log(`Адрес для Telegram Web App: ${appUrl}`);
 });
 
-// --- ЛОГИКА БОТА ---
+// Команда /start
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
-
-  bot.sendMessage(chatId, 
-    `👋 **Привет!**\n\n` +
-    `Нажмите кнопку ниже, чтобы открыть приложение по адресу:\n${appUrl}`, 
-    {
+  
+  bot.sendMessage(chatId, "👋 Добро пожаловать! Нажмите на кнопку, чтобы открыть Mini App:", {
     reply_markup: {
       inline_keyboard: [
         [
-          {
-            text: "Открыть Mini App 📱", 
-            web_app: {url: appUrl}
+          { 
+            text: "🚀 Открыть Mini App", 
+            web_app: {url: appUrl} 
           }
         ]
       ]
@@ -46,6 +43,12 @@ bot.onText(/\/start/, (msg) => {
   });
 });
 
+// Обработка данных из Mini App
 bot.on('web_app_data', (msg) => {
-  bot.sendMessage(msg.chat.id, `✅ Данные: ${msg.web_app_data.data}`);
+  const chatId = msg.chat.id;
+  const data = msg.web_app_data.data;
+  
+  bot.sendMessage(chatId, `✅ Получены данные: ${data}`);
 });
+
+console.log('Бот запущен и готов к работе!');
