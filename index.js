@@ -2,7 +2,7 @@ const TelegramBot = require('node-telegram-bot-api');
 const express = require('express');
 const path = require('path');
 const localtunnel = require('localtunnel');
-const http = require('http'); // Для определения IP
+const http = require('http');
 const app = express();
 
 // ВАШ ТОКЕН
@@ -16,43 +16,44 @@ let serverIp = '';
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Функция для получения внешнего IP (это и есть пароль)
+// Функция для получения IP (пароль для туннеля)
 function getPublicIp() {
     http.get({'host': 'api.ipify.org', 'port': 80, 'path': '/'}, function(resp) {
         resp.on('data', function(ip) {
             serverIp = ip.toString();
-            console.log("🌍 IP СЕРВЕРА (ПАРОЛЬ): " + serverIp);
+            console.log("🌍 IP СЕРВЕРА: " + serverIp);
         });
     });
 }
 
+// Запуск сервера
 app.listen(port, async () => {
   console.log(`🚀 Server started on port ${port}`);
-  getPublicIp(); // Узнаем IP при запуске
+  getPublicIp(); // Узнаем IP
   
   try {
     const tunnel = await localtunnel({ port: port });
     currentAppUrl = tunnel.url;
-    console.log('✅ HTTPS ССЫЛКА:', currentAppUrl);
+    console.log('✅ HTTPS ССЫЛКА: ' + currentAppUrl);
   } catch (err) {
     console.error('Ошибка туннеля:', err);
   }
 });
 
+// Обработка команды /start
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   
   if (!currentAppUrl || !serverIp) {
-    bot.sendMessage(chatId, "Бот запускается... Попробуйте через 5 секунд.");
+    bot.sendMessage(chatId, "⏳ Бот запускается... Подождите 10 секунд и нажмите /start снова.");
     return;
   }
 
-  // Отправляем инструкцию и кнопку
   bot.sendMessage(chatId, 
     `⚠️ **Важный шаг для первого запуска!**\n\n` +
-    `1. Скопируйте этот IP: \`${serverIp}\` (нажмите на него)\n` +
+    `1. Скопируйте этот IP (пароль): \`${serverIp}\` (нажмите на него)\n` +
     `2. Нажмите кнопку "Открыть Mini App" ниже.\n` +
-    `3. Вставьте IP в поле "Tunnel Password" и нажмите "Click to Submit".\n` +
+    `3. Вставьте IP в поле "Tunnel Password" и нажмите синюю кнопку "Click to Submit".\n` +
     `\nПосле этого приложение откроется!`, 
     {
     parse_mode: "Markdown",
@@ -69,28 +70,7 @@ bot.onText(/\/start/, (msg) => {
   });
 });
 
-bot.on('web_app_data', (msg) => {
-  const data = msg.web_app_data.data;
-  bot.sendMessage(msg.chat.id, `✅ Данные получены: ${data}`);
-});  if (!currentAppUrl) {
-    bot.sendMessage(chatId, "Сервер еще запускается, подождите пару секунд и нажмите /start снова.");
-    return;
-  }
-
-  bot.sendMessage(chatId, "Привет! Bothost Mini App готов 👇", {
-    reply_markup: {
-      inline_keyboard: [
-        [
-          {
-            text: "Открыть Mini App 📱", 
-            web_app: {url: currentAppUrl} // Используем полученную HTTPS ссылку
-          }
-        ]
-      ]
-    }
-  });
-});
-
+// Обработка данных из WebApp
 bot.on('web_app_data', (msg) => {
   const data = msg.web_app_data.data;
   bot.sendMessage(msg.chat.id, `✅ Данные получены: ${data}`);
