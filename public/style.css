@@ -1,35 +1,28 @@
-:root {
-    --bg-color: #ffffff;
-    --text-color: #000000;
-}
-
 body {
-    background-color: var(--tg-theme-bg-color, var(--bg-color));
-    color: var(--tg-theme-text-color, var(--text-color));
-    font-family: -apple-system, sans-serif;
+    background-color: var(--tg-theme-bg-color, #fff);
+    color: var(--tg-theme-text-color, #000);
+    font-family: -apple-system, system-ui, sans-serif;
     margin: 0;
     padding: 0;
 }
 
 .container {
-    padding: 20px;
-    max-width: 500px;
+    max-width: 600px;
     margin: 0 auto;
+    padding: 20px;
 }
 
 h1 {
     text-align: center;
-    margin-bottom: 30px;
 }
 
-.card {
-    background-color: rgba(0,0,0,0.05);
+.step {
+    background-color: var(--tg-theme-secondary-bg-color, #f0f0f0);
+    margin-bottom: 15px;
     padding: 15px;
     border-radius: 10px;
-    margin-bottom: 15px;
 }
 
 h2 {
     margin-top: 0;
-    font-size: 18px;
 }
