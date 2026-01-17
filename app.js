@@ -1,31 +1,23 @@
 const express = require('express');
 const path = require('path');
 
-const PORT = process.env.PORT || 3000;
+// Используйте порт 3001 вместо 3000
+const PORT = process.env.PORT || 3001;
+
 const app = express();
 
-// Добавляем CORS заголовки
-app.use((req, res, next) => {
-  // Логируем все запросы, чтобы видеть, что приходит
-  console.log(`📝 Request: ${req.method} ${req.url}`);
-  
-  // Разрешаем запросы от Telegram
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
-
-// Статические файлы
+// Раздаем статические файлы
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Тестовый эндпоинт, чтобы проверить работу сервера
-app.get('/test', (req, res) => {
-  res.send({ status: 'ok', message: 'Server is working!' });
+// Добавляем CORS-заголовки
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    console.log(`Request: ${req.method} ${req.url}`);
+    next();
 });
 
-// Запуск с правильной обработкой ошибок
+// Запускаем сервер на порту 3001
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`✅ Server running on port ${PORT}`);
-}).on('error', (err) => {
-  console.error('❌ Server error:', err.message);
+    console.log(`✅ Сервер запущен на порту ${PORT}`);
 });
