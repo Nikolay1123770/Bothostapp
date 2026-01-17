@@ -1,398 +1,267 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
+/* Основные настройки */
 :root {
-    /* BotHost цвета */
-    --bothost-primary: #9C32FF;
-    --bothost-secondary: #58A8FF;
-    --bothost-gradient: linear-gradient(135deg, #9C32FF, #58A8FF);
-    
-    /* Основные цвета */
-    --bg-color: #FFFFFF;
-    --text-color: #17181A;
-    --secondary-bg: #F7F7FC;
-    --hint-color: #9394A0;
-    --border-color: rgba(0, 0, 0, 0.08);
-    --shadow-color: rgba(0, 0, 0, 0.05);
-    --code-bg: #F2F3F7;
-    
-    /* Дополнительные цвета */
-    --success-color: #4CAF50;
-    --warning-color: #FF9800;
-    --error-color: #F44336;
+    --primary-color: #58A8FF;
+    --secondary-color: #9C32FF;
+    --gradient: linear-gradient(135deg, #58A8FF, #9C32FF);
+    --text-color: #FFFFFF;
+    --hint-color: rgba(255, 255, 255, 0.7);
+    --background: #17191C;
+    --card-bg: #24262D;
+    --card-border: #363A45;
 }
 
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    /* Используем переменные Telegram для поддержки темной темы */
-    background-color: var(--tg-theme-bg-color, var(--bg-color));
+    background-color: var(--tg-theme-bg-color, var(--background));
     color: var(--tg-theme-text-color, var(--text-color));
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Красивый градиентный фон на всю страницу */
+.background-gradient {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--background);
+    background-image: radial-gradient(circle at 10% 20%, rgba(88, 168, 255, 0.1) 0%, rgba(0, 0, 0, 0) 40%), 
+                      radial-gradient(circle at 90% 40%, rgba(156, 50, 255, 0.1) 0%, rgba(0, 0, 0, 0) 40%),
+                      radial-gradient(circle at 50% 90%, rgba(88, 168, 255, 0.1) 0%, rgba(0, 0, 0, 0) 40%);
+    z-index: -1;
 }
 
 .container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px 16px 40px 16px;
-}
-
-/* Шапка в стиле BotHost */
-header {
-    text-align: center;
-    margin-bottom: 32px;
-    padding: 20px 0;
+    padding: 20px;
     position: relative;
 }
 
-/* Градиентный логотип как у BotHost */
-.logo {
-    display: inline-flex;
+/* Заголовок в стиле BotHost с анимированным градиентом */
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 20px 0;
+}
+
+.logo-container {
+    display: flex;
     align-items: center;
     justify-content: center;
-    width: 80px;
-    height: 80px;
-    margin-bottom: 20px;
-    background: var(--bothost-gradient);
-    border-radius: 22px;
-    font-size: 36px;
-    color: white;
-    box-shadow: 0 8px 20px rgba(156, 50, 255, 0.2);
+    margin-bottom: 16px;
 }
 
-header h1 {
-    font-size: 28px;
+.logo {
+    width: 70px;
+    height: 70px;
+    font-size: 36px;
+    background: var(--gradient);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    box-shadow: 0 8px 32px rgba(88, 168, 255, 0.3);
+}
+
+/* Переливающийся синий заголовок */
+.bothost-title {
+    font-size: 40px;
     font-weight: 800;
-    margin-bottom: 10px;
-    background: var(--bothost-gradient);
+    background: linear-gradient(to right, #58A8FF, #4866FF, #58A8FF);
+    background-size: 200% auto;
     -webkit-background-clip: text;
     background-clip: text;
-    color: transparent;
-    display: inline-block;
+    -webkit-text-fill-color: transparent;
+    animation: shine 3s linear infinite;
+    letter-spacing: 1px;
+    text-shadow: 0 0 20px rgba(88, 168, 255, 0.5);
 }
 
-header p {
+@keyframes shine {
+    to { background-position: 200% center; }
+}
+
+.subtitle {
     color: var(--tg-theme-hint-color, var(--hint-color));
-    font-size: 16px;
-    max-width: 500px;
-    margin: 0 auto;
+    font-size: 18px;
+    margin-top: 10px;
 }
 
-/* Оглавление в стиле BotHost */
+/* Оглавление */
 .toc {
-    background-color: var(--tg-theme-secondary-bg-color, var(--secondary-bg));
+    background-color: var(--tg-theme-secondary-bg-color, var(--card-bg));
     border-radius: 16px;
     padding: 24px;
     margin-bottom: 40px;
-    box-shadow: 0 4px 12px var(--shadow-color);
-    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--card-border);
 }
 
 .toc h2 {
-    font-size: 18px;
-    margin-bottom: 16px;
-    color: var(--bothost-primary);
-    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 20px;
 }
 
 .toc ol {
-    padding-left: 24px;
+    padding-left: 30px;
 }
 
 .toc li {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .toc a {
-    color: var(--tg-theme-link-color, var(--bothost-secondary));
+    color: var(--tg-theme-link-color, var(--primary-color));
     text-decoration: none;
-    font-weight: 500;
+    transition: all 0.2s;
+    padding: 5px 0;
     display: inline-block;
-    transition: transform 0.2s, color 0.2s;
-    padding: 4px 0;
 }
 
 .toc a:hover {
-    transform: translateX(3px);
-    color: var(--bothost-primary);
+    color: #ffffff;
+    transform: translateX(5px);
 }
 
 /* Разделы */
 .section {
-    margin-bottom: 60px;
-    scroll-margin-top: 20px;
+    margin-bottom: 50px;
 }
 
 .section h2 {
-    font-size: 24px;
-    margin-bottom: 24px;
+    font-size: 26px;
+    color: var(--primary-color);
+    margin-bottom: 20px;
     position: relative;
     padding-bottom: 12px;
-    border-bottom: 1px solid var(--tg-theme-hint-color, var(--border-color));
-    color: var(--bothost-primary);
-    font-weight: 700;
+    border-bottom: 1px solid var(--card-border);
 }
 
-.section h2::before {
+.section h2:after {
     content: '';
     position: absolute;
-    bottom: -1px;
     left: 0;
-    width: 60px;
+    bottom: -1px;
     height: 3px;
-    background: var(--bothost-gradient);
+    width: 60px;
+    background: var(--gradient);
     border-radius: 3px;
 }
 
+/* Информационные блоки */
 .info-block {
-    margin-bottom: 30px;
-    background-color: var(--tg-theme-secondary-bg-color, var(--secondary-bg));
+    background-color: var(--tg-theme-secondary-bg-color, var(--card-bg));
     border-radius: 16px;
-    padding: 24px;
-    box-shadow: 0 4px 12px var(--shadow-color);
-    border: 1px solid var(--border-color);
+    padding: 25px;
+    margin-bottom: 25px;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
 .info-block h3 {
-    font-size: 18px;
-    margin-bottom: 16px;
-    font-weight: 700;
-    background: var(--bothost-gradient);
+    font-size: 20px;
+    margin-bottom: 20px;
+    background: var(--gradient);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     display: inline-block;
 }
 
-.info-block p, .info-block ul, .info-block ol {
-    margin-bottom: 16px;
-    font-size: 15px;
-    line-height: 1.6;
-}
-
-.info-block p:last-child, .info-block ul:last-child, .info-block ol:last-child {
-    margin-bottom: 0;
+.info-block p {
+    margin-bottom: 15px;
+    font-size: 16px;
 }
 
 .info-block ul, .info-block ol {
-    padding-left: 24px;
+    padding-left: 25px;
+    margin-bottom: 15px;
 }
 
 .info-block li {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
-/* Код */
-.code-block {
-    background-color: var(--tg-theme-bg-color, var(--code-bg));
-    border-radius: 12px;
-    padding: 16px;
-    margin: 16px 0;
-    font-family: 'JetBrains Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
-    font-size: 13px;
-    line-height: 1.5;
-    overflow-x: auto;
-    white-space: pre;
-    border: 1px solid var(--border-color);
-}
-
-code {
-    background-color: var(--tg-theme-secondary-bg-color, var(--code-bg));
-    padding: 3px 6px;
-    border-radius: 4px;
-    font-family: 'JetBrains Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
-    font-size: 13px;
-}
-
-/* Команды */
-.command-block {
-    margin: 16px 0;
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-.command-title {
-    background-color: var(--bothost-primary);
-    color: white;
-    padding: 10px 16px;
-    font-size: 14px;
-    font-weight: 600;
-}
-
-.command {
-    background-color: #292D3E;
-    color: #FFFFFF;
-    padding: 16px;
-    font-family: 'JetBrains Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
-    font-size: 13px;
-    line-height: 1.5;
-    overflow-x: auto;
-    white-space: pre;
-}
-
-/* Скриншоты в стиле BotHost */
+/* Скриншоты */
 .screenshot {
-    margin: 20px 0;
+    margin: 25px 0;
     text-align: center;
 }
 
 .screenshot img {
     max-width: 100%;
     border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--card-border);
 }
 
 .caption {
-    margin-top: 10px;
-    color: var(--tg-theme-hint-color, var(--hint-color));
+    margin-top: 12px;
     font-size: 14px;
+    opacity: 0.7;
     font-style: italic;
 }
 
-/* Полезные советы в стиле BotHost */
-.tip-block {
-    background: linear-gradient(to right, rgba(156, 50, 255, 0.05), rgba(88, 168, 255, 0.05));
-    border-left: 4px solid var(--bothost-primary);
-    border-radius: 12px;
-    padding: 16px 20px;
-    margin: 20px 0;
-}
-
-.tip-block h4 {
-    font-size: 16px;
-    margin-bottom: 10px;
-    color: var(--bothost-primary);
-    font-weight: 700;
-}
-
-.tip-block p, .tip-block ul {
-    margin-bottom: 10px;
+/* Код */
+code {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #f8f8f8;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
     font-size: 14px;
 }
 
-.tip-block p:last-child, .tip-block ul:last-child {
-    margin-bottom: 0;
-}
-
-/* Блоки с проблемами и решениями */
-.problems {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.problem {
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-.problem-title {
-    background-color: rgba(156, 50, 255, 0.1);
-    padding: 12px 16px;
-    font-weight: 600;
-}
-
-.problem-solution {
-    padding: 16px;
-    background-color: var(--tg-theme-bg-color, var(--bg-color));
-}
-
-.problem-solution p {
-    margin-bottom: 8px;
-}
-
-.problem-solution p:last-child {
-    margin-bottom: 0;
-}
-
-/* Ссылки */
-a {
-    color: var(--tg-theme-link-color, var(--bothost-secondary));
-    text-decoration: none;
-    transition: color 0.2s;
-}
-
-a:hover {
-    color: var(--bothost-primary);
-}
-
-/* Подвал в стиле BotHost */
+/* Подвал */
 footer {
     margin-top: 60px;
-    padding: 30px 20px;
-    background: var(--bothost-gradient);
+}
+
+.footer-gradient {
+    background: var(--gradient);
+    border-radius: 16px;
+    padding: 30px;
     text-align: center;
     color: white;
-    font-size: 14px;
-    border-radius: 16px;
-    box-shadow: 0 6px 18px rgba(156, 50, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(88, 168, 255, 0.3);
 }
 
 .footer-logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 15px;
-}
-
-.footer-icon {
     font-size: 24px;
-    margin-right: 10px;
+    font-weight: 800;
+    margin-bottom: 10px;
 }
 
-.footer-brand {
-    font-size: 18px;
-    font-weight: 700;
-}
-
-footer p {
-    margin-bottom: 8px;
-    opacity: 0.9;
-}
-
-footer p:last-child {
-    margin-bottom: 0;
-    opacity: 0.7;
+.copyright {
     font-size: 12px;
+    opacity: 0.7;
+    margin-top: 15px;
 }
 
-/* Адаптивность для мобильных устройств */
+/* Адаптивность */
 @media (max-width: 600px) {
-    .container {
-        padding: 16px 12px 30px 12px;
+    .logo {
+        width: 60px;
+        height: 60px;
+        font-size: 30px;
     }
     
-    header h1 {
-        font-size: 24px;
+    .bothost-title {
+        font-size: 32px;
     }
     
-    .section h2 {
-        font-size: 22px;
-    }
-    
-    .info-block, .toc {
-        padding: 16px;
-    }
-}
-
-/* Темная тема Telegram - дополнительные стили */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg-color: #1A1B1F;
-        --text-color: #FFFFFF;
-        --secondary-bg: #2A2C31;
-        --hint-color: #98999F;
-        --border-color: rgba(255, 255, 255, 0.08);
-        --shadow-color: rgba(0, 0, 0, 0.3);
-        --code-bg: #2A2C35;
+    .info-block {
+        padding: 20px;
     }
 }
