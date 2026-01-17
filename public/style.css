@@ -7,18 +7,18 @@
     --bothost-gradient: linear-gradient(135deg, #9C32FF, #58A8FF);
     
     /* Основные цвета */
-    --bg-color: #ffffff;
-    --text-color: #222222;
-    --secondary-bg: #F8F9FB;
-    --hint-color: #8E8E93;
-    --border-color: rgba(0, 0, 0, 0.1);
-    --code-bg: rgba(0, 0, 0, 0.03);
+    --bg-color: #FFFFFF;
+    --text-color: #17181A;
+    --secondary-bg: #F7F7FC;
+    --hint-color: #9394A0;
+    --border-color: rgba(0, 0, 0, 0.08);
     --shadow-color: rgba(0, 0, 0, 0.05);
+    --code-bg: #F2F3F7;
     
     /* Дополнительные цвета */
-    --success-color: #34C759;
-    --warning-color: #FF9500;
-    --error-color: #FF3B30;
+    --success-color: #4CAF50;
+    --warning-color: #FF9800;
+    --error-color: #F44336;
 }
 
 * {
@@ -61,7 +61,7 @@ header {
     height: 80px;
     margin-bottom: 20px;
     background: var(--bothost-gradient);
-    border-radius: 20px;
+    border-radius: 22px;
     font-size: 36px;
     color: white;
     box-shadow: 0 8px 20px rgba(156, 50, 255, 0.2);
@@ -92,12 +92,14 @@ header p {
     padding: 24px;
     margin-bottom: 40px;
     box-shadow: 0 4px 12px var(--shadow-color);
+    border: 1px solid var(--border-color);
 }
 
 .toc h2 {
     font-size: 18px;
     margin-bottom: 16px;
     color: var(--bothost-primary);
+    font-weight: 700;
 }
 
 .toc ol {
@@ -113,12 +115,13 @@ header p {
     text-decoration: none;
     font-weight: 500;
     display: inline-block;
-    transition: transform 0.2s;
+    transition: transform 0.2s, color 0.2s;
     padding: 4px 0;
 }
 
 .toc a:hover {
     transform: translateX(3px);
+    color: var(--bothost-primary);
 }
 
 /* Разделы */
@@ -134,6 +137,7 @@ header p {
     padding-bottom: 12px;
     border-bottom: 1px solid var(--tg-theme-hint-color, var(--border-color));
     color: var(--bothost-primary);
+    font-weight: 700;
 }
 
 .section h2::before {
@@ -152,14 +156,19 @@ header p {
     background-color: var(--tg-theme-secondary-bg-color, var(--secondary-bg));
     border-radius: 16px;
     padding: 24px;
-    box-shadow: 0 2px 8px var(--shadow-color);
+    box-shadow: 0 4px 12px var(--shadow-color);
+    border: 1px solid var(--border-color);
 }
 
 .info-block h3 {
     font-size: 18px;
     margin-bottom: 16px;
     font-weight: 700;
-    color: var(--bothost-secondary);
+    background: var(--bothost-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
 }
 
 .info-block p, .info-block ul, .info-block ol {
@@ -182,12 +191,12 @@ header p {
 
 /* Код */
 .code-block {
-    background-color: var(--tg-theme-bg-color, var(--bg-color));
+    background-color: var(--tg-theme-bg-color, var(--code-bg));
     border-radius: 12px;
     padding: 16px;
     margin: 16px 0;
-    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
-    font-size: 14px;
+    font-family: 'JetBrains Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 13px;
     line-height: 1.5;
     overflow-x: auto;
     white-space: pre;
@@ -195,11 +204,37 @@ header p {
 }
 
 code {
-    background-color: var(--tg-theme-secondary-bg-color, var(--secondary-bg));
-    padding: 2px 5px;
+    background-color: var(--tg-theme-secondary-bg-color, var(--code-bg));
+    padding: 3px 6px;
     border-radius: 4px;
-    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-family: 'JetBrains Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
     font-size: 13px;
+}
+
+/* Команды */
+.command-block {
+    margin: 16px 0;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.command-title {
+    background-color: var(--bothost-primary);
+    color: white;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.command {
+    background-color: #292D3E;
+    color: #FFFFFF;
+    padding: 16px;
+    font-family: 'JetBrains Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    overflow-x: auto;
+    white-space: pre;
 }
 
 /* Скриншоты в стиле BotHost */
@@ -211,8 +246,8 @@ code {
 .screenshot img {
     max-width: 100%;
     border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    border: 1px solid var(--tg-theme-hint-color, var(--border-color));
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--border-color);
 }
 
 .caption {
@@ -222,24 +257,9 @@ code {
     font-style: italic;
 }
 
-/* Временные заглушки для скриншотов */
-.image-placeholder {
-    background-color: var(--tg-theme-secondary-bg-color, rgba(156, 50, 255, 0.1));
-    border: 2px dashed rgba(156, 50, 255, 0.3);
-    border-radius: 16px;
-    padding: 60px 20px;
-    margin: 20px 0;
-    text-align: center;
-    color: var(--bothost-primary);
-}
-
-.image-placeholder span {
-    font-style: italic;
-}
-
 /* Полезные советы в стиле BotHost */
 .tip-block {
-    background: linear-gradient(to right, rgba(156, 50, 255, 0.1), rgba(88, 168, 255, 0.1));
+    background: linear-gradient(to right, rgba(156, 50, 255, 0.05), rgba(88, 168, 255, 0.05));
     border-left: 4px solid var(--bothost-primary);
     border-radius: 12px;
     padding: 16px 20px;
@@ -250,6 +270,7 @@ code {
     font-size: 16px;
     margin-bottom: 10px;
     color: var(--bothost-primary);
+    font-weight: 700;
 }
 
 .tip-block p, .tip-block ul {
@@ -261,28 +282,36 @@ code {
     margin-bottom: 0;
 }
 
-/* Таблица ошибок */
-.errors-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 14px;
+/* Блоки с проблемами и решениями */
+.problems {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
-.errors-table th {
+.problem {
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.problem-title {
     background-color: rgba(156, 50, 255, 0.1);
-    padding: 12px;
-    text-align: left;
+    padding: 12px 16px;
     font-weight: 600;
 }
 
-.errors-table td {
-    padding: 12px;
-    border-bottom: 1px solid var(--border-color);
+.problem-solution {
+    padding: 16px;
+    background-color: var(--tg-theme-bg-color, var(--bg-color));
 }
 
-.errors-table tr:last-child td {
-    border-bottom: none;
+.problem-solution p {
+    margin-bottom: 8px;
+}
+
+.problem-solution p:last-child {
+    margin-bottom: 0;
 }
 
 /* Ссылки */
@@ -296,46 +325,44 @@ a:hover {
     color: var(--bothost-primary);
 }
 
-/* Кнопки */
-button {
-    background-color: var(--tg-theme-button-color, var(--bothost-primary));
-    color: var(--tg-theme-button-text-color, white);
-    border: none;
-    border-radius: 8px;
-    padding: 12px 20px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(156, 50, 255, 0.3);
-}
-
-button:active {
-    transform: translateY(0);
-}
-
 /* Подвал в стиле BotHost */
 footer {
     margin-top: 60px;
     padding: 30px 20px;
-    background-color: var(--tg-theme-secondary-bg-color, var(--secondary-bg));
+    background: var(--bothost-gradient);
     text-align: center;
-    color: var(--tg-theme-hint-color, var(--hint-color));
+    color: white;
     font-size: 14px;
     border-radius: 16px;
-    box-shadow: 0 -2px 10px var(--shadow-color);
+    box-shadow: 0 6px 18px rgba(156, 50, 255, 0.2);
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.footer-icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.footer-brand {
+    font-size: 18px;
+    font-weight: 700;
 }
 
 footer p {
     margin-bottom: 8px;
+    opacity: 0.9;
 }
 
 footer p:last-child {
     margin-bottom: 0;
+    opacity: 0.7;
+    font-size: 12px;
 }
 
 /* Адаптивность для мобильных устройств */
@@ -352,32 +379,20 @@ footer p:last-child {
         font-size: 22px;
     }
     
-    .info-block {
-        padding: 16px;
-    }
-    
-    .toc {
+    .info-block, .toc {
         padding: 16px;
     }
 }
 
-/* Темная тема - дополнительные стили */
+/* Темная тема Telegram - дополнительные стили */
 @media (prefers-color-scheme: dark) {
     :root {
-        --bg-color: #18191A;
-        --text-color: #E4E6EB;
-        --secondary-bg: #242526;
-        --hint-color: #B0B3B8;
-        --border-color: rgba(255, 255, 255, 0.1);
-        --code-bg: rgba(255, 255, 255, 0.03);
+        --bg-color: #1A1B1F;
+        --text-color: #FFFFFF;
+        --secondary-bg: #2A2C31;
+        --hint-color: #98999F;
+        --border-color: rgba(255, 255, 255, 0.08);
         --shadow-color: rgba(0, 0, 0, 0.3);
-    }
-    
-    .code-block {
-        border-color: rgba(255, 255, 255, 0.1);
-    }
-    
-    .screenshot img {
-        border-color: rgba(255, 255, 255, 0.1);
+        --code-bg: #2A2C35;
     }
 }
