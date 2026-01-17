@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BotHost Manual</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">📚</div>
+            <h1>BotHost Manual</h1>
+            <p>Пошаговая инструкция по размещению Mini App</p>
+        </header>
+        
+        <div class="steps-container">
+            <!-- Шаг 1 -->
+            <div class="step" onclick="toggleStep(this)">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Подготовка файлов</div>
+                    <div class="step-arrow">▼</div>
+                </div>
+                <div class="step-content">
+                    <p>1. Создайте HTML, CSS и JavaScript файлы для вашего приложения.</p>
+                    <p>2. Важно подключить скрипт Telegram SDK в ваш HTML:</p>
+                    <pre class="code-block">&lt;script src="https://telegram.org/js/telegram-web-app.js"&gt;&lt;/script&gt;</pre>
+                    <p>3. Используйте следующие функции для инициализации:</p>
+                    <pre class="code-block">const tg = window.Telegram.WebApp;
+tg.ready(); // Сообщает о загрузке
+tg.expand(); // Расширяет на весь экран</pre>
+                </div>
+            </div>
+
+            <!-- Шаг 2 -->
+            <div class="step" onclick="toggleStep(this)">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Размещение на BotHost</div>
+                    <div class="step-arrow">▼</div>
+                </div>
+                <div class="step-content">
+                    <p>1. Создайте репозиторий на GitHub или GitLab.</p>
+                    <p>2. Загрузите файлы в структуре:</p>
+                    <pre class="code-block">repository/
+├── app.js       <-- Серверный код
+├── package.json <-- Зависимости проекта
+└── public/      <-- Папка с сайтом
+    ├── index.html
+    ├── style.css
+    └── script.js</pre>
+                    <p>3. В BotHost создайте бота типа Node.js и укажите ваш репозиторий.</p>
+                </div>
+            </div>
+
+            <!-- Шаг 3 -->
+            <div class="step" onclick="toggleStep(this)">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Настройка домена</div>
+                    <div class="step-arrow">▼</div>
+                </div>
+                <div class="step-content">
+                    <p>1. Вы можете использовать свой домен или поддомен от BotHost.</p>
+                    <p>2. Укажите домен в настройках бота в панели BotHost.</p>
+                    <p>3. Для своего домена необходимо настроить DNS-записи:</p>
+                    <ul>
+                        <li>Тип: A</li>
+                        <li>Имя: @ (или поддомен)</li>
+                        <li>Значение: IP-адрес вашего сервера в BotHost</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Шаг 4 -->
+            <div class="step" onclick="toggleStep(this)">
+                <div class="step-header">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Подключение к Telegram</div>
+                    <div class="step-arrow">▼</div>
+                </div>
+                <div class="step-content">
+                    <p>1. Откройте @BotFather в Telegram.</p>
+                    <p>2. Выберите вашего бота через команду /mybots.</p>
+                    <p>3. Перейдите в Bot Settings → Menu Button → Edit Menu Button.</p>
+                    <p>4. Введите URL вашего приложения (с https://).</p>
+                    <p>5. Придумайте название кнопки (например, "📚 Мануал").</p>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>BotHost Mini App Manual — руководство по созданию мини-приложений в Telegram</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
