@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Инструкция BotHost</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- SDK Телеграма -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header>
+            <div class="icon-box">📚</div>
+            <h1>BotHost Manual</h1>
+            <p>Как запустить Mini App за 5 шагов</p>
+        </header>
+
+        <div class="steps-container">
+            
+            <!-- Шаг 1 -->
+            <div class="step-card" onclick="toggleStep(this)">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Подготовка HTML</div>
+                    <div class="arrow">▼</div>
+                </div>
+                <div class="step-content">
+                    <p>Создайте <code>index.html</code>. Внутри тега <code>&lt;head&gt;</code> обязательно подключите скрипт Telegram:</p>
+                    <div class="code-block" onclick="copyText(this)">
+&lt;script src="https://telegram.org/js/telegram-web-app.js"&gt;&lt;/script&gt;
+                    </div>
+                    <p class="hint">Нажмите на код, чтобы скопировать.</p>
+                </div>
+            </div>
+
+            <!-- Шаг 2 -->
+            <div class="step-card" onclick="toggleStep(this)">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Загрузка на хостинг</div>
+                    <div class="arrow">▼</div>
+                </div>
+                <div class="step-content">
+                    <p>1. Зайдите в панель управления хостингом.<br>
+                    2. Откройте файловый менеджер или FTP.<br>
+                    3. Загрузите файлы сайта в папку <code>public_html</code> или <code>www</code>.<br>
+                    4. Убедитесь, что SSL сертификат активен.</p>
+                </div>
+            </div>
+
+            <!-- Шаг 3 -->
+            <div class="step-card" onclick="toggleStep(this)">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Настройка в BotFather</div>
+                    <div class="arrow">▼</div>
+                </div>
+                <div class="step-content">
+                    <p>1. Откройте <b>@BotFather</b>.<br>
+                    2. Введите команду <code>/mybots</code>.<br>
+                    3. Выберите своего бота.<br>
+                    4. Перейдите: <b>Bot Settings</b> → <b>Menu Button</b> → <b>Configure Menu Button</b>.</p>
+                </div>
+            </div>
+
+            <!-- Шаг 4 -->
+            <div class="step-card" onclick="toggleStep(this)">
+                <div class="step-header">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Ввод ссылки</div>
+                    <div class="arrow">▼</div>
+                </div>
+                <div class="step-content">
+                    <p>BotFather попросит ссылку. Отправьте ему адрес вашего сайта:</p>
+                    <div class="code-block" onclick="copyText(this)">
+https://bothostmanualminiapp.ru
+                    </div>
+                    <p>Затем введите название кнопки, например: "📖 Инструкция".</p>
+                </div>
+            </div>
+
+             <!-- Шаг 5 -->
+             <div class="step-card" onclick="toggleStep(this)">
+                <div class="step-header">
+                    <div class="step-number">5</div>
+                    <div class="step-title">Готово!</div>
+                    <div class="arrow">▼</div>
+                </div>
+                <div class="step-content">
+                    <p>Теперь у пользователей вашего бота появится кнопка слева от поля ввода текста. При нажатии на неё откроется ваш сайт внутри Telegram.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="spacer"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
