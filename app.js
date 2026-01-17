@@ -1,24 +1,31 @@
 const express = require('express');
 const path = require('path');
 
-// Берем порт от BotHost или ставим 3000
 const PORT = process.env.PORT || 3000;
-
 const app = express();
 
-// Раздаем сайт из папки public
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Запускаем сервер ОДИН РАЗ
-const server = app.listen(PORT, () => {
-    console.log(`✅ Сервер запущен на порту ${PORT}`);
+// Добавляем CORS заголовки
+app.use((req, res, next) => {
+  // Логируем все запросы, чтобы видеть, что приходит
+  console.log(`📝 Request: ${req.method} ${req.url}`);
+  
+  // Разрешаем запросы от Telegram
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
 });
 
-// Обработка ошибки, если порт занят
-server.on('error', (e) => {
-    if (e.code === 'EADDRINUSE') {
-        console.error('⚠️ ОШИБКА: Порт занят! Попробуйте остановить бота на 1 минуту.');
-    } else {
-        console.error(e);
-    }
+// Статические файлы
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Тестовый эндпоинт, чтобы проверить работу сервера
+app.get('/test', (req, res) => {
+  res.send({ status: 'ok', message: 'Server is working!' });
+});
+
+// Запуск с правильной обработкой ошибок
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`✅ Server running on port ${PORT}`);
+}).on('error', (err) => {
+  console.error('❌ Server error:', err.message);
 });
