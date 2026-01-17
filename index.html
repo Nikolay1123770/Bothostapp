@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BotHost Manual</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Подключаем Telegram SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">📱</div>
+            <h1>BotHost Guide</h1>
+            <p>Как создать Mini App бесплатно</p>
+        </header>
+
+        <main>
+            <div class="card">
+                <h2>1. Подготовка файлов</h2>
+                <p>У вас должны быть готовы <code>index.html</code>, <code>style.css</code> и <code>script.js</code>.</p>
+                <p>В HTML обязательно подключите скрипт Телеграма:</p>
+                <div class="code-box" onclick="copyCode(this)">
+&lt;script src="https://telegram.org/js/telegram-web-app.js"&gt;&lt;/script&gt;
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>2. Загрузка на GitHub</h2>
+                <p>1. Создайте репозиторий.<br>
+                2. Загрузите файлы в <b>корень</b> (без папок).<br>
+                3. Перейдите в Settings -> Pages.<br>
+                4. Включите Deploy from branch (main).</p>
+            </div>
+
+            <div class="card">
+                <h2>3. Настройка BotFather</h2>
+                <p>1. Откройте @BotFather.<br>
+                2. Выберите бота -> Bot Settings -> Menu Button.<br>
+                3. Укажите ссылку, которую выдал GitHub Pages.</p>
+            </div>
+        </main>
+
+        <footer>
+            <button onclick="tg.close()">Закрыть</button>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
