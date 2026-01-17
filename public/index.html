@@ -4,30 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BotHost Manual</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- Правильное подключение Telegram SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Простое содержимое для теста -->
     <div class="container">
-        <h1>Руководство BotHost</h1>
-        <p>Как создать Mini App на BotHost</p>
-        
-        <div class="card">
-            <h2>Шаг 1: Подготовка</h2>
-            <p>Создайте простые HTML, CSS и JS файлы.</p>
-        </div>
-        
-        <div class="card">
-            <h2>Шаг 2: Загрузка</h2>
-            <p>Загрузите файлы в Git-репозиторий.</p>
-        </div>
-        
-        <div class="card">
-            <h2>Шаг 3: BotFather</h2>
-            <p>Настройте кнопку в BotFather.</p>
-        </div>
+        <h1>BotHost Manual</h1>
+        <p>Если вы видите эту страницу, всё работает!</p>
     </div>
-    
-    <script src="script.js"></script>
+
+    <script>
+        // Инициализация прямо в HTML для теста
+        try {
+            const tg = window.Telegram.WebApp;
+            tg.ready();
+            tg.expand();
+            console.log("Telegram WebApp initialized!");
+        } catch (e) {
+            console.error("Error initializing Telegram WebApp:", e);
+        }
+    </script>
 </body>
 </html>
