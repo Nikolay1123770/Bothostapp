@@ -12,38 +12,54 @@ if (tg.setHeaderColor) {
     tg.setHeaderColor('secondary_bg_color');
 }
 
-// Функция для открытия/закрытия шагов
-function toggleStep(step) {
-    // Вибро-отклик для лучшего UX
-    if (tg.HapticFeedback) {
-        tg.HapticFeedback.impactOccurred('light');
-    }
-    
-    // Если этот шаг уже открыт - закрываем его
-    if (step.classList.contains('active')) {
-        step.classList.remove('active');
-        return;
-    }
-    
-    // Закрываем все открытые шаги
-    document.querySelectorAll('.step.active').forEach(openStep => {
-        openStep.classList.remove('active');
+// Добавляем плавную прокрутку для ссылок
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            // Вибрация (тактильная обратная связь)
+            if (tg.HapticFeedback) {
+                tg.HapticFeedback.impactOccurred('light');
+            }
+            
+            // Прокрутка
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// Когда вы добавите скриншоты, удалите эту функцию
+document.addEventListener('DOMContentLoaded', function() {
+    // Заменяем заполнители изображений на реальные изображения
+    // Это будет сделано позже, когда вы получите скриншоты
+    document.querySelectorAll('.image-placeholder').forEach(placeholder => {
+        placeholder.style.cursor = 'pointer';
+        placeholder.title = 'Здесь будет скриншот';
+        
+        placeholder.addEventListener('click', function() {
+            if (tg.HapticFeedback) {
+                tg.HapticFeedback.notificationOccurred('error');
+            }
+            // Вы можете показать сообщение о том, что скриншоты будут добавлены позже
+        });
     });
     
-    // Открываем текущий шаг
-    step.classList.add('active');
-}
-
-// Открываем первый шаг по умолчанию
-document.addEventListener('DOMContentLoaded', function() {
-    const firstStep = document.querySelector('.step');
-    if (firstStep) {
+    // Открываем первый раздел
+    const firstSection = document.querySelector('#intro');
+    if (firstSection) {
         setTimeout(() => {
-            firstStep.classList.add('active');
+            firstSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
         }, 500);
     }
-    
-    // Логи для отладки
-    console.log('Приложение запущено!');
-    console.log('Тема: ' + tg.colorScheme);
 });
+
+// Логи для отладки
+console.log('Mini App загружено!');
+console.log('Тема: ' + tg.colorScheme);
