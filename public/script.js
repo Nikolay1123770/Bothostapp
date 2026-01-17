@@ -1,25 +1,25 @@
 // Инициализация Telegram Mini App
 const tg = window.Telegram.WebApp;
 
-// Сообщаем Telegram, что приложение загружено
+// Сообщаем Telegram, что приложение готово
 tg.ready();
 
 // Расширяем на весь экран
 tg.expand();
 
-// Устанавливаем цвет шапки
+// Настраиваем цвет шапки
 if (tg.setHeaderColor) {
     tg.setHeaderColor('secondary_bg_color');
 }
 
-// Отключаем свайп назад (опционально)
+// Отключаем свайп назад
 if (tg.disableSwipeBack) {
     tg.disableSwipeBack(true);
 }
 
-// Плавная прокрутка по якорям (для оглавления)
+// Для всего интерактива на странице
 document.addEventListener('DOMContentLoaded', function() {
-    // Обработка всех внутренних ссылок
+    // Плавная прокрутка по якорям
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
@@ -27,105 +27,53 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetElement = document.querySelector(targetId);
             
             if (targetElement) {
-                // Добавляем тактильную обратную связь
+                // Тактильная обратная связь
                 if (tg.HapticFeedback) {
                     tg.HapticFeedback.impactOccurred('light');
                 }
                 
-                // Плавная прокрутка
+                // Плавная прокрутка к разделу
                 targetElement.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
                 });
+                
+                // Подсветка активной ссылки
+                document.querySelectorAll('.toc a').forEach(link => {
+                    link.classList.remove('active');
+                });
+                this.classList.add('active');
             }
         });
     });
     
-    // Функция для управления фокусом заголовков при скроллинге
-    function highlightCurrentSection() {
-        const sections = document.querySelectorAll('.section');
-        const scrollPosition = window.scrollY + 100; // Небольшой отступ сверху
-        
-        let currentSection = null;
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            
-            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                currentSection = section.id;
-            }
-        });
-        
-        // Выделение активного пункта меню
-        document.querySelectorAll('.toc a').forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${currentSection}`) {
-                link.classList.add('active');
-            }
-        });
-    }
-    
-    // Следим за скроллом для подсветки текущего раздела
-    window.addEventListener('scroll', highlightCurrentSection);
-    
-    // Заменяем заглушки изображений
-    // Эта функция будет заменена, когда вы добавите реальные скриншоты
-    document.querySelectorAll('.image-placeholder').forEach(placeholder => {
-        placeholder.style.cursor = 'pointer';
-        placeholder.title = 'Здесь будет скриншот';
-        
-        placeholder.addEventListener('click', function() {
-            if (tg.HapticFeedback) {
-                tg.HapticFeedback.notificationOccurred('warning');
-            }
-            alert('Скриншот будет добавлен позже');
-        });
-    });
-    
-    // Копирование кода при клике (опционально)
-    document.querySelectorAll('.code-block').forEach(block => {
-        block.title = 'Нажмите, чтобы скопировать код';
+    // Копирование кода при клике
+    document.querySelectorAll('.code-block, .command').forEach(block => {
+        block.title = 'Нажмите, чтобы скопировать';
         block.style.cursor = 'pointer';
         
         block.addEventListener('click', function() {
-            const text = this.textContent;
-            copyToClipboard(text);
-            
-            // Обратная связь
-            if (tg.HapticFeedback) {
-                tg.HapticFeedback.notificationOccurred('success');
-            }
-            
-            // Визуальное подтверждение
-            const originalBackground = this.style.backgroundColor;
-            this.style.backgroundColor = 'rgba(156, 50, 255, 0.2)';
-            
-            setTimeout(() => {
-                this.style.backgroundColor = originalBackground;
-            }, 300);
+            const text = this.textContent.trim();
+            navigator.clipboard.writeText(text).then(() => {
+                // Вибрация при успешном копировании
+                if (tg.HapticFeedback) {
+                    tg.HapticFeedback.notificationOccurred('success');
+                }
+                
+                // Визуальный эффект
+                const originalBackground = this.style.backgroundColor;
+                this.style.backgroundColor = 'rgba(156, 50, 255, 0.2)';
+                
+                setTimeout(() => {
+                    this.style.backgroundColor = originalBackground;
+                }, 300);
+            }).catch(err => {
+                console.error('Не удалось скопировать текст:', err);
+            });
         });
     });
     
-    // Вспомогательная функция для копирования текста
-    function copyToClipboard(text) {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.style.position = 'fixed';
-        document.body.appendChild(textarea);
-        textarea.select();
-        
-        try {
-            document.execCommand('copy');
-            console.log('Код скопирован в буфер обмена');
-        } catch (err) {
-            console.error('Не удалось скопировать текст:', err);
-        }
-        
-        document.body.removeChild(textarea);
-    }
-    
-    // Открываем первый раздел по умолчанию
+    // Открываем первый раздел автоматически
     setTimeout(() => {
         const firstSection = document.querySelector('#intro');
         if (firstSection) {
@@ -137,23 +85,39 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 500);
 });
 
-// Сбор аналитики (можно настроить по вашим требованиям)
-function logEvent(eventName, eventData = {}) {
-    eventData.timestamp = new Date().toISOString();
-    eventData.user_agent = navigator.userAgent;
-    eventData.theme = tg.colorScheme;
-    
-    console.log(`Event: ${eventName}`, eventData);
-    // Здесь можно добавить отправку данных на ваш сервер аналитики
-}
+// Анимация при прокрутке (эффект появления)
+const observerOptions = {
+    root: null, // viewport
+    rootMargin: '0px',
+    threshold: 0.1 // 10% элемента должно быть видимо
+};
 
-// Логируем информацию о запуске
-logEvent('app_launched', {
-    platform: navigator.platform,
-    screen_size: `${window.innerWidth}x${window.innerHeight}`
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+        }
+    });
+}, observerOptions);
+
+// Наблюдаем за всеми блоками секций
+document.querySelectorAll('.info-block').forEach(block => {
+    block.style.opacity = '0';
+    block.style.transform = 'translateY(20px)';
+    block.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(block);
+});
+
+// Добавляем класс для анимации появления
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.info-block.visible').forEach(block => {
+        block.style.opacity = '1';
+        block.style.transform = 'translateY(0)';
+    });
 });
 
 // Логи для отладки
 console.log('Mini App загружено!');
 console.log('Тема Telegram:', tg.colorScheme);
-console.log('Версия Telegram WebApp:', tg.version || 'неизвестно');
+console.log('Версия WebApp:', tg.version || 'неизвестно');
