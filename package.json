@@ -1,8 +1,12 @@
 {
   "name": "bothost-manual",
   "version": "1.0.0",
+  "description": "BotHost Manual - Telegram Mini App с ботом",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
+  },
+  "dependencies": {
+    "node-telegram-bot-api": "^0.64.0"
   }
 }
