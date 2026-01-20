@@ -273,6 +273,74 @@
         .github-icon {
             font-family: "Font Awesome 5 Brands";
         }
+        
+        /* Блок поддержки */
+        .support-block {
+            background: linear-gradient(135deg, #2481cc, #8774e1);
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 30px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 8px 24px rgba(36, 129, 204, 0.3);
+        }
+        
+        .support-block h3 {
+            margin: 0 0 12px 0;
+            font-size: 20px;
+            color: white;
+        }
+        
+        .support-block p {
+            margin: 0 0 20px 0;
+            opacity: 0.9;
+            font-size: 15px;
+        }
+        
+        .support-block .support-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            display: block;
+        }
+        
+        .btn-support {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: white;
+            color: #2481cc;
+            padding: 14px 28px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-support:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-support:active {
+            transform: translateY(0);
+        }
+        
+        .btn-support .bot-icon {
+            font-size: 24px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--tg-theme-hint-color, var(--hint-color));
+            font-size: 14px;
+        }
+        
+        footer p {
+            margin: 5px 0;
+        }
     </style>
 </head>
 <body>
@@ -739,6 +807,12 @@ console.log('Текущая тема:', tg.colorScheme);
                     <li>Обязательно соблюдайте структуру: app.js и package.json в корне, остальные файлы внутри папки public</li>
                 </ol>
                 
+                <!-- Скриншот загрузки на GitHub -->
+                <div class="screenshot">
+                    <img src="images/github_upload.png" alt="Загрузка файлов на GitHub">
+                    <div class="caption">Рис. 4: Интерфейс загрузки файлов на GitHub</div>
+                </div>
+                
                 <h4>Способ 2: Через Git (рекомендуется)</h4>
                 <div class="code-box">
                 <pre>
@@ -800,6 +874,12 @@ telegram-miniapp/
                     </li>
                     <li>Нажмите "Создать бота"</li>
                 </ol>
+                
+                <!-- Скриншот создания бота на BotHost -->
+                <div class="screenshot">
+                    <img src="images/bothost_create_bot.png" alt="Создание бота на платформе BotHost">
+                    <div class="caption">Рис. 5: Форма создания бота на платформе BotHost</div>
+                </div>
             </div>
             
             <div class="info-block">
@@ -820,6 +900,12 @@ telegram-miniapp/
                     <li>В панели управления введите свой домен</li>
                     <li>BotHost автоматически выпустит SSL-сертификат</li>
                 </ol>
+                
+                <!-- Скриншот настройки домена -->
+                <div class="screenshot">
+                    <img src="images/bothost_domain_setup.png" alt="Настройка домена на BotHost">
+                    <div class="caption">Рис. 6: Настройка домена для мини-приложения на BotHost</div>
+                </div>
                 
                 <p class="warning">⚠️ Telegram Mini App работает ТОЛЬКО по HTTPS! Убедитесь, что ваш домен имеет SSL-сертификат.</p>
             </div>
@@ -871,6 +957,12 @@ telegram-miniapp/
                     <li>Введите текст для кнопки (например, "Открыть приложение")</li>
                     <li>Введите URL вашего приложения (например, <code>https://myapp.bothost.ru</code>)</li>
                 </ol>
+                
+                <!-- Скриншот настройки кнопки в BotFather -->
+                <div class="screenshot">
+                    <img src="images/botfather_menu_button.png" alt="Настройка кнопки Web App в меню бота">
+                    <div class="caption">Рис. 7: Настройка кнопки меню Mini App в BotFather</div>
+                </div>
                 
                 <p>После этого в меню бота появится кнопка, при нажатии на которую будет открываться ваше Mini App.</p>
             </div>
@@ -1197,6 +1289,17 @@ function createDebugPanel() {
 </pre>
                 </div>
             </div>
+            
+            <!-- Блок технической поддержки -->
+            <div class="support-block">
+                <span class="support-icon">🛠️</span>
+                <h3>Нужна помощь?</h3>
+                <p>Если вы столкнулись с проблемой, которую не можете решить самостоятельно, наш технический бот поддержки поможет вам разобраться!</p>
+                <a href="https://t.me/BotHostAI_Support_bot" target="_blank" class="btn-support">
+                    <span class="bot-icon">🤖</span>
+                    Написать в поддержку
+                </a>
+            </div>
         </section>
         
         <!-- РАЗДЕЛ 9: ПРИМЕРЫ ПРОЕКТОВ -->
@@ -1214,7 +1317,7 @@ function createDebugPanel() {
                         <h4>AI Support Bot</h4>
                         <p>Бот технической поддержки с искусственным интеллектом для ответов на вопросы пользователей.</p>
                         <div class="project-links">
-                            <a href="https://t.me/BotHostManualMiniApp_bot" target="_blank" class="btn-small">Открыть бота</a>
+                            <a href="https://t.me/BotHostAI_Support_bot" target="_blank" class="btn-small">Открыть бота</a>
                             <a href="https://github.com/Nikolay1123770/ai-support-bot.git" target="_blank" class="btn-small btn-github">
                                 <span class="github-icon">&#xf09b;</span> GitHub
                             </a>
@@ -1227,7 +1330,7 @@ function createDebugPanel() {
                         <h4>Mini App Manual</h4>
                         <p>Интерактивное руководство по созданию Mini App на BotHost с примерами кода и пошаговыми инструкциями.</p>
                         <div class="project-links">
-                            <a href="https://t.me/BotHostAI_Support_bot" target="_blank" class="btn-small">Открыть бота</a>
+                            <a href="https://t.me/BotHostManualMiniApp_bot" target="_blank" class="btn-small">Открыть бота</a>
                             <a href="https://github.com/Nikolay1123770/Bothostapp.git" target="_blank" class="btn-small btn-github">
                                 <span class="github-icon">&#xf09b;</span> GitHub
                             </a>
@@ -1239,7 +1342,7 @@ function createDebugPanel() {
         
         <!-- Подвал страницы -->
         <footer>
-            <p>© 2026 BotHost.ru — Платформа для хостинга ботов и Mini App</p>
+            <p>© 2025 BotHost.ru — Платформа для хостинга ботов и Mini App</p>
             <p>Документация написана с использованием технологии Mini App</p>
         </footer>
     </div>
